@@ -329,7 +329,7 @@ func main() {
 	logger.Init()
 	// Read the opt-out before constructing any telemetry dependency. In the
 	// disabled case no collector or HTTP client is ever created.
-	telemetryConfig := selfhosttelemetry.ConfigFromDoNotTrack(os.Getenv("DO_NOT_TRACK"))
+	telemetryConfig := selfhosttelemetry.ConfigFromOptIn(os.Getenv("MULTICA_SELF_HOST_TELEMETRY"))
 	selfhosttelemetry.LogStartupStatus(slog.Default(), telemetryConfig)
 	// Warn about missing configuration
 	if err := jwtSecretBootError(os.Getenv("JWT_SECRET"), os.Getenv("APP_ENV")); err != nil {
@@ -702,7 +702,7 @@ func main() {
 		LLMMaxRetries:       llmMaxRetries,
 		LLMDisableThinking:  llmDisableThinking,
 	})
-	// member_delegation_day exists only for self-host telemetry; DO_NOT_TRACK
+	// member_delegation_day exists only for self-host telemetry; MULTICA_SELF_HOST_TELEMETRY
 	// stops writing it as well as sending the snapshot.
 	h.TaskService.RecordMemberActivity = telemetryConfig.Enabled
 	h.InboxTrimmer = inboxTrimmer

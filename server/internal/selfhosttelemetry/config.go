@@ -12,6 +12,15 @@ type Config struct {
 	Enabled bool
 }
 
+// ConfigFromOptIn enables self-host telemetry only when the operator explicitly
+// sets MULTICA_SELF_HOST_TELEMETRY to 1 or true. Telemetry is off by default:
+// nothing leaves a self-hosted deployment unless the operator asks for it.
+func ConfigFromOptIn(raw string) Config {
+	raw = strings.TrimSpace(raw)
+	enabled := raw == "1" || strings.EqualFold(raw, "true")
+	return Config{Enabled: enabled}
+}
+
 // ConfigFromDoNotTrack implements the industry-standard opt-out switch used by
 // the self-hosted server. Only 1 and true (case-insensitive), after trimming,
 // disable telemetry; every other value preserves the default-on behavior.
@@ -21,12 +30,12 @@ func ConfigFromDoNotTrack(raw string) Config {
 	return Config{Enabled: !disabled}
 }
 
-// LogStartupStatus makes the default-on behavior observable without logging
+// LogStartupStatus makes the default-off behavior observable without logging
 // the raw environment value or any telemetry data.
 func LogStartupStatus(logger *slog.Logger, config Config) {
 	if config.Enabled {
-		logger.Info("self-host telemetry enabled")
+		logger.Info("self-host telemetry enabled (MULTICA_SELF_HOST_TELEMETRY)")
 		return
 	}
-	logger.Info("self-host telemetry disabled via DO_NOT_TRACK")
+	logger.Info("self-host telemetry disabled (opt-in via MULTICA_SELF_HOST_TELEMETRY=1)")
 }

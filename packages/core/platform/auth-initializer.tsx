@@ -239,7 +239,8 @@ export function AuthInitializer({
         status: "authenticated",
         expired: false,
       });
-      identifyAnalytics(user.id, { email: user.email, name: user.name });
+      // Identify by opaque user id only: no email or name leaves the client.
+      identifyAnalytics(user.id);
       if (authRecoveryPendingRef.current) {
         authRecoveryPendingRef.current = false;
         // A network-not-ready boot can fail both auth and config requests;

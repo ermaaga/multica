@@ -182,9 +182,9 @@ This pulls the official images from GHCR and requires Docker. See the
 [Self-Hosting Guide](SELF_HOSTING.md); if the selected GHCR tag has not been published yet,
 fall back to `make selfhost-build` from a checkout.
 
-A self-hosted server sends one anonymous, deployment-level snapshot a day: the release version
-plus bucketed counts, with no names, content, or IDs. Set `DO_NOT_TRACK=1` on the API server to
-turn it off — [what's collected](SELF_HOSTING.md#anonymous-deployment-telemetry).
+Self-hosted servers send nothing by default. To opt in to one anonymous, deployment-level snapshot a
+day (release version plus bucketed counts, no names, content, or IDs), set
+`MULTICA_SELF_HOST_TELEMETRY=1` on the API server — [what's collected](SELF_HOSTING.md#anonymous-deployment-telemetry).
 
 </details>
 

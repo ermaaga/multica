@@ -39,7 +39,7 @@ import (
 type TaskService struct {
 	// RecordMemberActivity enables the member_delegation_day ledger, which
 	// only feeds self-host telemetry. Off unless the server enables telemetry
-	// at startup, so DO_NOT_TRACK stops collection, not just delivery.
+	// at startup, so disabling telemetry stops collection, not just delivery.
 	RecordMemberActivity bool
 
 	Queries   *db.Queries

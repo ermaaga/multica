@@ -151,7 +151,6 @@ func Signup(userID, email, signupSource string) Event {
 			"signup_source": signupSource,
 		},
 		SetOnce: map[string]any{
-			"email":         email,
 			"signup_source": signupSource,
 		},
 	}
